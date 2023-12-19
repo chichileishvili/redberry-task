@@ -1,0 +1,32 @@
+/* Styles for the navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff; /* Light background color */
+  border-bottom: 1px solid #e4e3eb; /* Border at the bottom */
+  padding: 0.5rem 2rem; /* Padding around the content */
+  height: 80px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  color: #ff0000; /* REDBERRY logo color */
+  font-weight: bold;
+}
+
+.nav-button {
+  padding: 0.5rem 1rem;
+  background-color: #5d37f3; /* Purple background color for the button */
+  border: none;
+  border-radius: 8px; /* Rounded corners for the button */
+  color: #ffffff; /* Text color for the button */
+  cursor: pointer; /* Cursor to indicate it's clickable */
+  width: 93px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.nav-button:hover {
+  background-color: #3700b3; /* Darker purple on hover */
+}

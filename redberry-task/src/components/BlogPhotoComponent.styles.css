@@ -1,0 +1,22 @@
+.blog-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.blog-title {
+  width: 225px;
+  height: 72px;
+  padding-top: 128px;
+  padding-left: 89px;
+  font-size: 64px;
+  font-family: FiraGO;
+  font-weight: 700;
+  line-height: 72px;
+}
+.blog-svg {
+  padding-top: 144px;
+  padding-left: 420px;
+  height: 200px;
+  width: 624px;
+}
