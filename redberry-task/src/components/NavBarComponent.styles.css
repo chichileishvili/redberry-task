@@ -15,18 +15,26 @@
   font-weight: bold;
 }
 
-.nav-button {
-  padding: 0.5rem 1rem;
-  background-color: #5d37f3; /* Purple background color for the button */
-  border: none;
-  border-radius: 8px; /* Rounded corners for the button */
-  color: #ffffff; /* Text color for the button */
-  cursor: pointer; /* Cursor to indicate it's clickable */
-  width: 93px;
-  height: 40px;
-  font-size: 14px;
-}
-
 .nav-button:hover {
   background-color: #3700b3; /* Darker purple on hover */
+}
+
+.nav-button {
+  cursor: pointer;
+  width: fit-content;
+  padding-left: 1214px;
+  padding-top: 30px;
+  display: inline-flex;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  background: #5d37f3;
+  color: #fff;
+  font-family: FiraGO;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
 }
