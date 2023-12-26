@@ -1,27 +1,28 @@
-import { Form, Link, redirect, useActionData } from 'react-router-dom'
+import { Form, Link, redirect, useActionData, useNavigate } from 'react-router-dom'
 import { customFetch } from '../utils/customFetch'
-import { BlogNavbar } from '../components'
+import { BlogNavbar, SuccesAddBlog } from '../components'
 import LeftArror from '../assets/images/leftArrow.svg'
 import { CategoriesContext } from '../contexts/CategoriesContext'
 import { useContext } from 'react'
 import './AddBlogPage.styles.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import DropdownImg from '../assets/images/dropdown.svg'
 import FolderAdd from '../assets/images/folder-add.svg'
 import IMGicon from '../assets/images/img-icon.svg'
 
 export const action = async ({ request }) => {
   const formData = await request.formData()
+
   console.log(formData)
 
   try {
     await customFetch.post('/blogs', formData, {
       'Content-Type': 'multipart/form-data',
     })
-    return redirect('/')
+    return { success: true }
   } catch (error) {
     console.log(error)
-    return error
+    return { success: false, error: error }
   }
 }
 
@@ -30,9 +31,34 @@ const AddBlogPage = () => {
   const [dropdown, setDropdown] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState([])
   const [fileName, setFileName] = useState('')
-  console.log(fileName)
+  const [succesPopup, setSuccesPopup] = useState(false)
+  console.log('succesPop', succesPopup)
+  const actionData = useActionData()
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (actionData && actionData.success) {
+      setSuccesPopup(true)
+      const timer = setTimeout(() => navigate('/dashboard'), 3000) // Redirect after 3 seconds
+      return () => clearTimeout(timer) // Cleanup the timer on unmount or if the dependency changes
+    }
+  }, [actionData, navigate])
 
-  console.log(selectedOptions)
+  const handleDashboardRedirectModal = () => {
+    setSuccesPopup(false)
+    navigate('/')
+  }
+  const handleCloseLoginModal = () => {
+    setSuccesPopup(false)
+  }
+
+  if (succesPopup) {
+    return (
+      <SuccesAddBlog
+        handleDashboardRedirectModal={handleDashboardRedirectModal}
+        handleCloseLoginModal={handleCloseLoginModal}
+      />
+    )
+  }
 
   const removeOptionHandler = (option, event) => {
     event.stopPropagation()
@@ -67,7 +93,6 @@ const AddBlogPage = () => {
   const dropdownHandler = () => {
     setDropdown(!dropdown)
   }
-  console.log(categories)
   return (
     <div>
       <BlogNavbar />
