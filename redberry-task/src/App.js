@@ -1,11 +1,12 @@
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
 import { BlogPage } from './pages'
 import { LandingPage } from './pages'
 import { AddBlogPage } from './pages'
 import { loader as LandingPageLoader } from './pages/LandingPage'
-import { Login } from './components'
-import { action as LoginAction } from './components/LoginComponent'
+import { action as AddBlogAction } from './pages/AddBlogPage'
+import { CategoriesProvider } from './contexts/CategoriesContext'
 
 const router = createBrowserRouter([
   {
@@ -20,11 +21,16 @@ const router = createBrowserRouter([
   {
     path: '/add-blog',
     element: <AddBlogPage />,
+    action: AddBlogAction,
   },
 ])
 
 function App() {
-  return <RouterProvider router={router} />
+  return (
+    <CategoriesProvider>
+      <RouterProvider router={router} />
+    </CategoriesProvider>
+  )
 }
 
 export default App

@@ -1,18 +1,22 @@
-import { Navbar, SuccesLogin } from '../components'
-import { BlogPhoto } from '../components'
-import customFetch from '../utils/customFetch'
-import { Login } from '../components'
-import { useState } from 'react'
+import { customFetch } from '../utils/customFetch'
+import { Login, CategoryTitleComponent, BlogPhoto, Navbar, Blogs } from '../components'
+import { useContext, useState } from 'react'
 import { useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 
+import { CategoriesContext } from '../contexts/CategoriesContext'
+import { useLoaderData } from 'react-router-dom'
+
 export const loader = async () => {
   try {
-    const token = await customFetch.get('/token')
+    let blogData
 
-    const data = await customFetch.get('/blogs', token.data.token)
-    console.log(data)
-    return data
+    const blogResponse = await customFetch.get('/blogs')
+
+    blogData = blogResponse.data
+    console.log(blogData)
+
+    return { blogData: blogData }
   } catch (error) {
     console.log(error)
     return error
@@ -20,17 +24,19 @@ export const loader = async () => {
 }
 
 const LandingPage = () => {
-  const { setIsLoggedIn } = useAuth()
-  useEffect(() => {
-    const sessionToken = localStorage.getItem('token')
-    console.log(sessionToken)
+  const { categories } = useContext(CategoriesContext)
+  const { blogData } = useLoaderData()
 
-    if (sessionToken) {
+  const { setIsLoggedIn } = useAuth()
+
+  useEffect(() => {
+    const email = localStorage.getItem('email')
+
+    if (email) {
       setIsLoggedIn(true)
     }
   }, [])
   const [showLogin, setShowLogin] = useState(false)
-  console.log(showLogin)
   const handleCloseLoginModal = () => setShowLogin(false)
   const handleOpenLoginModal = () => setShowLogin(true)
 
@@ -39,8 +45,8 @@ const LandingPage = () => {
       <Navbar handleOpenLoginModal={handleOpenLoginModal} />
       <BlogPhoto />
       {showLogin && <Login handleCloseLoginModal={handleCloseLoginModal} />}
-
-      <h1>landing page</h1>
+      <CategoryTitleComponent categories={categories} />
+      <Blogs blogs={blogData} />
     </div>
   )
 }

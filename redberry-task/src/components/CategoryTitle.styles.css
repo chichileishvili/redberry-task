@@ -1,0 +1,13 @@
+.category-title {
+  gap: 10px;
+  border-radius: 30px;
+  padding: 8px 16px;
+  width: fit-content;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.category-title-container {
+  display: flex;
+  align-items: flex-start;
+}

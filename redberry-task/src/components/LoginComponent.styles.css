@@ -52,7 +52,7 @@
   margin-left: 24px;
 }
 
-.email-input {
+.modal-email-input {
   width: 432px;
   height: 44px;
   flex-shrink: 0;
@@ -63,7 +63,7 @@
   margin-top: 8px;
 }
 
-.submit-button {
+.modal-submit-button {
   display: flex;
   width: 432px;
   padding: 10px 20px;
@@ -81,7 +81,7 @@
   margin-left: 24px;
 }
 
-.submit-button:hover {
+.modal-submit-button:hover {
   background-color: #3700b3; /* Darker purple on hover */
 }
 .error {
@@ -106,7 +106,7 @@
   align-items: center;
 }
 
-.input-error {
+.modal-input-error {
   width: 432px;
   height: 44px;
   flex-shrink: 0;

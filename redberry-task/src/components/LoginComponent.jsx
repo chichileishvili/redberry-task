@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './LoginComponent.styles.css'
 import { SuccesLogin } from '.'
-import customFetch from '../utils/customFetch'
+import {customFetch} from '../utils/customFetch'
 import errorSign from '../assets/images/error-sign.svg'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -17,11 +17,10 @@ const LoginComponent = ({ handleCloseLoginModal }) => {
 
     try {
       const response = await customFetch.post('/login', data)
-      const token = await customFetch.get('/token')
 
       if (response.status === 204) {
         localStorage.setItem('email', data.email)
-        localStorage.setItem('token', token.data.token)
+
         setIsLoggedIn(true)
       } else {
         setErrors({ ...errors, msg: response.message })
@@ -50,7 +49,7 @@ const LoginComponent = ({ handleCloseLoginModal }) => {
           type='email'
           id='email-input'
           placeholder='Example@redberry.ge'
-          className={errors.msg === '' ? 'email-input' : 'input-error'}
+          className={errors.msg === '' ? 'modal-email-input' : 'modal-input-error'}
           name='email'
         />
         {errors.msg && (
@@ -61,7 +60,7 @@ const LoginComponent = ({ handleCloseLoginModal }) => {
         )}
         <button
           type='submit'
-          className='submit-button'
+          className='modal-submit-button'
           onClick={() => isLoggedIn && handleCloseLoginModal()}>
           შესვლა
         </button>

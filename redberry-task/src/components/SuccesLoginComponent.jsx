@@ -10,7 +10,7 @@ const SuccesLoginComponent = ({ handleCloseLoginModal }) => {
         </button>
         <img src={greenTick} alt='greenTick' className='green-tick' />
         <h2 className='modal-title'>წარმატებული ავტორიზაცია</h2>
-        <button className='submit-button' onClick={handleCloseLoginModal}>
+        <button className='modal-submit-button' onClick={handleCloseLoginModal}>
           კარგი
         </button>
       </div>

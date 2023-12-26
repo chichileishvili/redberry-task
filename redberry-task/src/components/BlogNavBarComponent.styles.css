@@ -1,0 +1,15 @@
+.blog-navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e4e3eb;
+
+  height: 80px;
+}
+
+.blog-navbar-logo {
+  font-size: 1.5rem;
+  color: #ff0000;
+  font-weight: bold;
+}

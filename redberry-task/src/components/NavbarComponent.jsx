@@ -1,18 +1,20 @@
 import RedberryLogo from '../assets/images/redberry-logo.svg'
 import './NavBarComponent.styles.css'
 import { useAuth } from '../contexts/AuthContext'
-import { redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const NavBarComponent = ({ handleOpenLoginModal }) => {
   const { isLoggedIn } = useAuth()
+  console.log("isloggedin" ,isLoggedIn)
+  console.log(isLoggedIn)
 
   return (
     <nav className='navbar'>
       <img className='logo' src={RedberryLogo} alt='logo' />
       {isLoggedIn ? (
-        <button className='nav-button' onClick={() => redirect('/add-blog')}>
+        <Link to='/add-blog' className='nav-button'>
           დაამატე ბლოგი
-        </button>
+        </Link>
       ) : (
         <button onClick={handleOpenLoginModal} className='nav-button'>
           შესვლა
