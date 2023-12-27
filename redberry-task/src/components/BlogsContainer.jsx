@@ -1,3 +1,5 @@
+import './BlogsContainer.styles.css'
+
 const BlogsContainer = ({ blogs }) => {
   console.log(blogs)
   return (

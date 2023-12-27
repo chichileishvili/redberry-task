@@ -3,7 +3,7 @@ import './BlogPhotoComponent.styles.css'
 
 const BlogPhotoComponent = () => {
   return (
-    <div className='blog-container'>
+    <div className='photo-blog-container'>
       <h1 className='blog-title'>ბლოგი</h1>
 
       <img src={blogPhoto} alt='blogPhoto' className='blog-svg' />

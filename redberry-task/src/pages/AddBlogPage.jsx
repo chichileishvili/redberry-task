@@ -1,4 +1,4 @@
-import { Form, Link, redirect, useActionData, useNavigate } from 'react-router-dom'
+import { Form, Link, useActionData, useNavigate } from 'react-router-dom'
 import { customFetch } from '../utils/customFetch'
 import { BlogNavbar, SuccesAddBlog } from '../components'
 import LeftArror from '../assets/images/leftArrow.svg'
@@ -32,16 +32,166 @@ const AddBlogPage = () => {
   const [selectedOptions, setSelectedOptions] = useState([])
   const [fileName, setFileName] = useState('')
   const [succesPopup, setSuccesPopup] = useState(false)
-  console.log('succesPop', succesPopup)
+  const [hasStartedTypingAuthor, setHasStartedTypingAuthor] = useState(false)
+  const [hasStartedTypingTitle, setHasStartedTypingTitle] = useState(false)
+  const [hasStartedTypingDescription, setHasStartedTypingDescription] = useState(false)
+  const [hasStartedTypingEmail, setHasStartedTypingEmail] = useState(false)
+  const [authorValidation, setAuthorValidation] = useState(
+    localStorage.getItem('authorValidation') || ''
+  )
+  const [titleValidation, setTitleValidation] = useState(
+    localStorage.getItem('titleValidation') || ''
+  )
+  const [descriptionValidation, setDescriptionValidation] = useState(
+    localStorage.getItem('descriptionValidation') || ''
+  )
+  const [publishDate, setPublishDate] = useState(localStorage.getItem('publishDate') || '')
+  const [email, setEmail] = useState(localStorage.getItem('email') || '')
+  const [isSubmitEnabled, setIsSubmitEnabled] = useState(false)
   const actionData = useActionData()
   const navigate = useNavigate()
+
+  const isFormValid = () => {
+    const isDateValid = publishDate !== ''
+    const isCategoriesValid = selectedOptions.length > 0
+    const emailRegex = /^[^\s@]+@redberry\.ge$/
+    const isEmailValid = emailRegex.test(email)
+    const isDescriptionValid = descriptionValidation.length >= 2
+    const isAuthorValid =
+      authorValidation.length >= 4 &&
+      /^[ა-ჰ\s]+$/.test(authorValidation) &&
+      authorValidation.split(' ').filter((word) => word.trim() !== '').length >= 2
+    const isTitleValid = titleValidation.length >= 2
+
+    return (
+      isAuthorValid &&
+      isTitleValid &&
+      isDescriptionValid &&
+      isDateValid &&
+      isCategoriesValid &&
+      isEmailValid
+    )
+  }
+
+  useEffect(() => {
+    setIsSubmitEnabled(isFormValid())
+    localStorage.setItem('authorValidation', authorValidation)
+    localStorage.setItem('titleValidation', titleValidation)
+    localStorage.setItem('descriptionValidation', descriptionValidation)
+    localStorage.setItem('publishDate', publishDate)
+    localStorage.setItem('email', email)
+  }, [
+    authorValidation,
+    titleValidation,
+    descriptionValidation,
+    publishDate,
+    selectedOptions,
+    email,
+  ])
+  const dataInputValidation = () => {
+    if (publishDate == '') return 'date-input'
+
+    return 'title-input-green'
+  }
+  const categoriesInputValidation = () => {
+    if (selectedOptions.length === 0) return 'select'
+
+    return 'select-green'
+  }
+
+  const titleInputValidation = () => {
+    if (!hasStartedTypingTitle) return 'title-input'
+
+    return titleValidation.length < 2 ? 'title-input-red' : 'title-input-green'
+  }
+
+  const handleDateChange = (e) => {
+    setPublishDate(e.target.value)
+  }
+
+  const handleEmailChange = (e) => {
+    setHasStartedTypingEmail(true)
+    setEmail(e.target.value)
+  }
+  const titleOnChange = (event) => {
+    setHasStartedTypingTitle(true)
+
+    const newValue = event.target.value
+    setTitleValidation(newValue)
+  }
+
+  const authorOnChange = (event) => {
+    setHasStartedTypingAuthor(true)
+
+    const newValue = event.target.value
+    setAuthorValidation(newValue)
+  }
+
   useEffect(() => {
     if (actionData && actionData.success) {
       setSuccesPopup(true)
-      const timer = setTimeout(() => navigate('/dashboard'), 3000) // Redirect after 3 seconds
-      return () => clearTimeout(timer) // Cleanup the timer on unmount or if the dependency changes
+      const timer = setTimeout(() => navigate('/dashboard'), 3000)
+      return () => clearTimeout(timer)
     }
   }, [actionData, navigate])
+
+  const isGeorgian = (text) => {
+    if (!hasStartedTypingAuthor) return {}
+
+    const georgianRegex = /^[ა-ჰ\s]+$/
+    const isGeorgian = georgianRegex.test(text)
+
+    return { color: isGeorgian ? 'green' : 'red' }
+  }
+
+  const isTwoWordsOrMore = (inputString) => {
+    if (!hasStartedTypingAuthor) return {}
+
+    const words = inputString.split(' ').filter((word) => word.trim() !== '')
+    return { color: words.length >= 2 ? 'green' : 'red' }
+  }
+
+  const getListItemStyleAuthor = () => {
+    if (!hasStartedTypingAuthor) return 'author-input'
+    return authorValidation.length < 4 ||
+      isGeorgian(authorValidation).color === 'red' ||
+      isTwoWordsOrMore(authorValidation).color === 'red'
+      ? 'author-input-red'
+      : 'author-input-green'
+  }
+  const getListItemStyle = (num) => {
+    if (!hasStartedTypingAuthor) return {}
+    return {
+      color: authorValidation.length < num ? 'red' : 'green',
+    }
+  }
+
+  const getListItemStyleTitle = () => {
+    if (!hasStartedTypingTitle) return 'title-validation'
+    return titleValidation.length < 2 ? 'title-validation-red' : 'title-validation-green'
+  }
+
+  const descriptionOnChange = (event) => {
+    setHasStartedTypingDescription(true)
+    const newValue = event.target.value
+    setDescriptionValidation(newValue)
+  }
+  const getListItemStyleDescription = () => {
+    if (!hasStartedTypingDescription) return 'title-validation'
+    return descriptionValidation.length < 2 ? 'title-validation-red' : 'title-validation-green'
+  }
+
+  const getListItemStyleEmail = () => {
+    if (!hasStartedTypingEmail) return 'form-email'
+    const emailRegex = /^[^\s@]+@redberry\.ge$/
+    const isEmailValid = emailRegex.test(email)
+    return !isEmailValid ? 'title-input-red' : 'title-input-green'
+  }
+  console.log(getListItemStyleEmail())
+  const getListItemStyleDescriptionInput = () => {
+    if (!hasStartedTypingDescription) return 'description-input'
+    return descriptionValidation.length < 2 ? 'description-input-red' : 'description-input-green'
+  }
 
   const handleDashboardRedirectModal = () => {
     setSuccesPopup(false)
@@ -154,49 +304,63 @@ const AddBlogPage = () => {
           <div className='author-container'>
             <label htmlFor='author'>ავტორი*</label>
             <input
+              onChange={authorOnChange}
               type='text'
-              className='author-input'
+              className={getListItemStyleAuthor()}
               name='author'
               required
               placeholder='შეიყვანეთ ავტორი'
+              defaultValue={authorValidation}
             />
             <ul className='author-validation'>
-              <li>მინიმუმ 4 სიმბოლო</li>
-              <li>მინიმუმ 2 სიტყვა</li>
-              <li>მხოლოდ ქართული სიმბოლოები</li>
+              <li style={getListItemStyle(4)}>მინიმუმ 4 სიმბოლო</li>
+              <li style={isTwoWordsOrMore(authorValidation)}>მინიმუმ 2 სიტყვა</li>
+              <li style={isGeorgian(authorValidation)}>მხოლოდ ქართული სიმბოლოები</li>
             </ul>
           </div>
 
           <div className='title-container'>
             <label htmlFor='title'>სათაური*</label>
             <input
+              defaultValue={titleValidation}
+              onChange={titleOnChange}
               type='text'
-              className='title-input'
+              className={titleInputValidation()}
               placeholder='შეიყვანეთ სათაური'
               name='title'
               required
             />
-            <p className='title-validation'>მინიმუმ 2 სიმბოლო</p>
+            <p className={getListItemStyleTitle()}>მინიმუმ 2 სიმბოლო</p>
           </div>
         </div>
 
         <div className='description-container'>
           <label htmlFor='description'>აღწერა*</label>
           <textarea
+            defaultValue={descriptionValidation}
+            onChange={descriptionOnChange}
             name='description'
-            className='description-input'
+            className={getListItemStyleDescriptionInput()}
             placeholder='შეიყვანეთ აღწერა'></textarea>
+          <p className={getListItemStyleDescription()}>მინიმუმ 2 სიმბოლო</p>
         </div>
 
         <div className='form-row'>
           <div className='publish-date-container'>
             <label htmlFor='publish_date'>გამოქვეყნების თარიღი</label>
-            <input type='date' className='date-input' name='publish_date' required />
+            <input
+              defaultValue={publishDate}
+              type='date'
+              className={dataInputValidation()}
+              name='publish_date'
+              onChange={handleDateChange}
+              required
+            />
           </div>
 
           <div className='dropdown'>
             <label htmlFor='categories'>კატეგორია*</label>
-            <div className='select' onClick={dropdownHandler}>
+            <div className={categoriesInputValidation()} onClick={dropdownHandler}>
               {selectedOptions.length === 0 && (
                 <span className='placeholder'>შეიყვანეთ სათაური</span>
               )}
@@ -240,10 +404,25 @@ const AddBlogPage = () => {
 
         <div className='email-container'>
           <label htmlFor='email'>ელ-ფოსტა</label>
-          <input type='email' required name='email' className='form-email' />
+          <input
+            type='email'
+            required
+            name='email'
+            className={getListItemStyleEmail()}
+            defaultValue={email}
+            onChange={handleEmailChange}
+          />
+          {getListItemStyleEmail() === 'title-validation-red' ? (
+            <p className='email-validation'>ელ-ფოსტა უნდა მთავრდებოდეს redberry.ge</p>
+          ) : (
+            ''
+          )}
         </div>
 
-        <button type='submit' className='submit-button'>
+        <button
+          type='submit'
+          className={!isSubmitEnabled ? 'disabled-submit-button' : 'submit-button'}
+          disabled={!isSubmitEnabled}>
           გამოქვეყნება
         </button>
       </Form>

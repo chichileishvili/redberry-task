@@ -1,28 +1,24 @@
 import axios from 'axios'
 
-const fetchToken = async () => {
-  const storedToken = localStorage.getItem('token')
-  const storedTimestamp = localStorage.getItem('tokenTimestamp')
-  const currentTime = new Date().getTime()
+const ensureToken = async () => {
+  let storedToken = localStorage.getItem('token')
 
-  if (storedToken && storedTimestamp && currentTime - storedTimestamp < 3600000) {
-    return storedToken
-  } else {
+  if (!storedToken) {
     try {
       const response = await axios.get('https://api.blog.redberryinternship.ge/api/token')
-      const newToken = response.data.token // Assuming the token is in the response body directly
-      localStorage.setItem('token', newToken)
-      localStorage.setItem('tokenTimestamp', currentTime.toString())
-      return newToken
+      storedToken = response.data.token
+      localStorage.setItem('token', storedToken)
     } catch (error) {
       console.error('Error fetching token:', error)
-      return null
+      storedToken = null
     }
   }
+
+  return storedToken
 }
 
 const createCustomFetch = async () => {
-  const token = await fetchToken()
+  const token = await ensureToken()
   if (token) {
     return axios.create({
       baseURL: 'https://api.blog.redberryinternship.ge/api',
