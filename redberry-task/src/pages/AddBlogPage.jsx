@@ -130,7 +130,7 @@ const AddBlogPage = () => {
   useEffect(() => {
     if (actionData && actionData.success) {
       setSuccesPopup(true)
-      const timer = setTimeout(() => navigate('/dashboard'), 3000)
+      const timer = setTimeout(() => navigate('/'), 3000)
       return () => clearTimeout(timer)
     }
   }, [actionData, navigate])
