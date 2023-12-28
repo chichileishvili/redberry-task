@@ -7,6 +7,7 @@ import { Navbar } from '../components'
 import LeftArror from '../assets/images/leftArrow.svg'
 import BlogLeftArrow from '../assets/images/blog-left-arrow.svg'
 import BlogRightArrow from '../assets/images/blog-right-arrow.svg'
+import LinkArrow from '../assets/images/link-arrow.svg'
 
 export const loader = async ({ params }) => {
   console.log(params)
@@ -41,7 +42,7 @@ const BlogPage = () => {
         blog.categories.some((category) => currentBlogCategoryIds.has(category.id))
     )
   }
-  console.log('filtered', filterRelatedBlogs(data, blogData.data))
+  const filtered = filterRelatedBlogs(data, blogData.data)
 
   useEffect(() => {
     const email = localStorage.getItem('email')
@@ -95,6 +96,39 @@ const BlogPage = () => {
               className='related-blog-right-arrow'
             />
           </div>
+        </div>
+        <div className='blogs-container'>
+          {Array.isArray(filtered) &&
+            filtered.map((blog) => (
+              <div className='blog-container' key={blog.id}>
+                <img src={blog.image} alt='blog-landingPage-image' />
+                <div>
+                  <p className='blog-landingPage-author'>{blog.author}</p>
+                  <p className='blog-landingPage-date'> {blog.publish_date}</p>
+                </div>
+                <h2 className='blog-landingPage-title'>{blog.title}</h2>
+                <div className='blog-categories-container'>
+                  {blog.categories.map((category) => (
+                    <p
+                      style={{
+                        color: category.text_color,
+                        background: category.background_color,
+                      }}
+                      className='blog-category'
+                      key={category.id}>
+                      {category.title}
+                    </p>
+                  ))}
+                </div>
+                <div>
+                  <p className='landingPage-description-blog'>{blog.description}</p>
+                </div>
+                <Link to={`/blog/${blog.id}`} className='blog-landingPage-link'>
+                  იხილეთ ვრცლად
+                  <img src={LinkArrow} alt='link-arrow' className='blog-landingPage-link-arrow' />
+                </Link>
+              </div>
+            ))}
         </div>
       </div>
     </div>

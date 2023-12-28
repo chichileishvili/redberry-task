@@ -368,19 +368,21 @@ const AddBlogPage = () => {
               {selectedOptions.length === 0 && (
                 <span className='placeholder'>შეიყვანეთ სათაური</span>
               )}
-              {selectedOptions.map((option) => (
-                <span
-                  className='tag'
-                  style={{ color: option.text_color, background: option.background_color }}
-                  key={option.id}>
-                  {option.title}
+              <div className='addBlog-tag-container'>
+                {selectedOptions.map((option) => (
                   <span
-                    className='tag-close-icon'
-                    onClick={(event) => removeOptionHandler(option, event)}>
-                    ×
+                    className='tag'
+                    style={{ color: option.text_color, background: option.background_color }}
+                    key={option.id}>
+                    {option.title}
+                    <span
+                      className='tag-close-icon'
+                      onClick={(event) => removeOptionHandler(option, event)}>
+                      ×
+                    </span>
                   </span>
-                </span>
-              ))}
+                ))}
+              </div>
               <img src={DropdownImg} alt='dropdown' className='dropdown-img' />
             </div>
             <ul
@@ -390,6 +392,7 @@ const AddBlogPage = () => {
               {selectedOptions.map((option) => (
                 <input type='hidden' name='categories[]' value={option.id} key={option.id} />
               ))}
+
               {Array.isArray(categories.data) &&
                 categories.data.map((category) => (
                   <li
