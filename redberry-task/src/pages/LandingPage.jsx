@@ -11,14 +11,14 @@ export const loader = async () => {
     return { blogData: blogResponse.data }
   } catch (error) {
     console.error('Error loading blogs:', error)
-    return { blogData: [] } // Return an empty array in case of an error
+    return { blogData: [] }
   }
 }
 
 const LandingPage = () => {
+  const [showLogin, setShowLogin] = useState(false)
   const { categories } = useContext(CategoriesContext)
   const { blogData } = useLoaderData()
-  const blogs = blogData.data // Assuming this is the correct data structure
   const [selectedCategory, setSelectedCategory] = useState(null)
   const { setIsLoggedIn } = useAuth()
 
@@ -38,8 +38,8 @@ const LandingPage = () => {
     return blogs.filter((blog) => blog.categories.some((category) => category.id === categoryId))
   }
 
-  const [showLogin, setShowLogin] = useState(false)
   const handleCloseLoginModal = () => setShowLogin(false)
+
   const handleOpenLoginModal = () => setShowLogin(true)
 
   return (
@@ -48,7 +48,7 @@ const LandingPage = () => {
       <BlogPhoto />
       {showLogin && <Login handleCloseLoginModal={handleCloseLoginModal} />}
       <CategoryTitleComponent categories={categories} onCategoryChange={handleCategoryChange} />
-      <Blogs blogs={filterBlogs(blogs, selectedCategory)} />
+      <Blogs blogs={filterBlogs(blogData.data, selectedCategory)} />
     </div>
   )
 }

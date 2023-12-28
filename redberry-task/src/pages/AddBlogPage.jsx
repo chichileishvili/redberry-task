@@ -88,11 +88,13 @@ const AddBlogPage = () => {
     selectedOptions,
     email,
   ])
+
   const dataInputValidation = () => {
     if (publishDate == '') return 'date-input'
 
     return 'title-input-green'
   }
+
   const categoriesInputValidation = () => {
     if (selectedOptions.length === 0) return 'select'
 
@@ -100,9 +102,11 @@ const AddBlogPage = () => {
   }
 
   const titleInputValidation = () => {
-    if (!hasStartedTypingTitle) return 'title-input'
-
-    return titleValidation.length < 2 ? 'title-input-red' : 'title-input-green'
+    return !hasStartedTypingTitle
+      ? 'title-input'
+      : titleValidation.length < 2
+      ? 'title-input-red'
+      : 'title-input-green'
   }
 
   const handleDateChange = (e) => {
@@ -113,6 +117,7 @@ const AddBlogPage = () => {
     setHasStartedTypingEmail(true)
     setEmail(e.target.value)
   }
+
   const titleOnChange = (event) => {
     setHasStartedTypingTitle(true)
 
@@ -278,12 +283,11 @@ const AddBlogPage = () => {
             </div>
           ) : (
             <>
-              {' '}
               <img src={FolderAdd} alt='addfolderimage' />
               <p className='uploadfile-text'>
                 ჩააგდეთ ფაილი აქ ან{' '}
                 <span style={{ textDecorationLine: 'underline' }}>აირჩიეთ ფაილი</span>
-              </p>{' '}
+              </p>
             </>
           )}
 
@@ -412,10 +416,8 @@ const AddBlogPage = () => {
             defaultValue={email}
             onChange={handleEmailChange}
           />
-          {getListItemStyleEmail() === 'title-validation-red' ? (
+          {getListItemStyleEmail() === 'title-validation-red' && (
             <p className='email-validation'>ელ-ფოსტა უნდა მთავრდებოდეს redberry.ge</p>
-          ) : (
-            ''
           )}
         </div>
 

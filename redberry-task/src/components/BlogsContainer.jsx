@@ -24,7 +24,9 @@ const BlogsContainer = ({ blogs }) => {
                 </p>
               ))}
             </div>
-            <p className='blog-description'> {blog.description}</p>
+            <div>
+              <p className='landingPage-description-blog'>{blog.description}</p>
+            </div>
             <Link to={`/blog/${blog.id}`} className='blog-landingPage-link'>
               იხილეთ ვრცლად
               <img src={LinkArrow} alt='link-arrow' className='blog-landingPage-link-arrow' />
