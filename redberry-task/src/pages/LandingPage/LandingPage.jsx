@@ -24,13 +24,26 @@ const LandingPage = () => {
 
   useEffect(() => {
     const email = localStorage.getItem('email')
+    const storedCategoryId = localStorage.getItem('selectedCategoryId')
+
+    if (storedCategoryId) {
+      setSelectedCategory(parseInt(storedCategoryId, 10))
+    }
     if (email) {
       setIsLoggedIn(true)
     }
   }, [setIsLoggedIn])
 
   const handleCategoryChange = (categoryId) => {
-    setSelectedCategory(categoryId)
+    const storedCategoryId = localStorage.getItem('selectedCategoryId')
+
+    if (storedCategoryId && storedCategoryId === categoryId.toString()) {
+      localStorage.removeItem('selectedCategoryId')
+      setSelectedCategory(null)
+    } else {
+      localStorage.setItem('selectedCategoryId', categoryId)
+      setSelectedCategory(categoryId)
+    }
   }
 
   const filterBlogs = (blogs, categoryId) => {
