@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from 'react-router-dom'
 import { customFetch } from '../utils/customFetch'
 import { useAuth } from '../contexts/AuthContext'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './BlogPage.styles.css'
 import { Navbar } from '../components'
 import LeftArror from '../assets/images/leftArrow.svg'
@@ -22,16 +22,11 @@ export const loader = async ({ params }) => {
 
 const BlogPage = () => {
   const { data, blogData } = useLoaderData()
-  console.log(data.categories)
-  console.log(blogData)
-  if (data.categories.map((category) => category.id).some == 7) {
-    console.log('yes')
-  } else {
-    console.log('no')
-  }
-
   console.log(data.categories.map((category) => category.id))
   const { setIsLoggedIn } = useAuth()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const blogsPerSlide = 3
+  console.log('current index', currentIndex)
   const filterRelatedBlogs = (currentBlog, allBlogs) => {
     if (!currentBlog.categories || !Array.isArray(allBlogs.data)) return []
 
@@ -43,6 +38,7 @@ const BlogPage = () => {
     )
   }
   const filtered = filterRelatedBlogs(data, blogData.data)
+  const currentFilteredBlogs = filtered.slice(currentIndex, currentIndex + blogsPerSlide)
 
   useEffect(() => {
     const email = localStorage.getItem('email')
@@ -50,6 +46,21 @@ const BlogPage = () => {
       setIsLoggedIn(true)
     }
   }, [setIsLoggedIn])
+
+  const sliderStyle = {
+    transform: `translateX(-${(100 / blogsPerSlide) * currentIndex}%)`,
+  }
+  const goToNextSlide = () => {
+    if (currentIndex < filtered.length - blogsPerSlide) {
+      setCurrentIndex(currentIndex + blogsPerSlide)
+    }
+  }
+
+  const goToPreviousSlide = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - blogsPerSlide)
+    }
+  }
 
   return (
     <div>
@@ -89,18 +100,20 @@ const BlogPage = () => {
               src={BlogLeftArrow}
               alt='RelatedBlogLeftArrow'
               className='related-blog-left-arrow'
+              onClick={goToPreviousSlide}
             />
             <img
               src={BlogRightArrow}
               alt='RelatedBlogRightArrow'
               className='related-blog-right-arrow'
+              onClick={goToNextSlide}
             />
           </div>
         </div>
-        <div className='blogs-container'>
-          {Array.isArray(filtered) &&
-            filtered.map((blog) => (
-              <div className='blog-container' key={blog.id}>
+        <div className='blogs-blogPage-container'>
+          {Array.isArray(currentFilteredBlogs) &&
+            currentFilteredBlogs.map((blog) => (
+              <div className='blog-blogPage-container' key={blog.id}>
                 <img src={blog.image} alt='blog-landingPage-image' />
                 <div>
                   <p className='blog-landingPage-author'>{blog.author}</p>

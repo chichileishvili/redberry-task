@@ -83,3 +83,26 @@
 .related-blog-left-arrow {
   margin-right: 24px;
 }
+.blogs-blogPage-container {
+  padding-top: 64px;
+  display: flex;
+  width: 1288px;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 56px 32px;
+  margin: 0 auto;
+  overflow: hidden;
+  transition: transform 0.5s ease-in-out;
+  overflow: hidden;
+  width: fit-content;
+  padding-bottom: 100px;
+}
+
+.blog-blogPage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 408px;
+  height: 620px;
+}
