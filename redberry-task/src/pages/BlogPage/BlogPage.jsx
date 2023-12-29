@@ -1,13 +1,13 @@
 import { Link, useLoaderData } from 'react-router-dom'
-import { customFetch } from '../utils/customFetch'
-import { useAuth } from '../contexts/AuthContext'
+import { customFetch } from '../../utils/customFetch'
+import { useAuth } from '../../contexts/AuthContext'
 import { useEffect, useState } from 'react'
 import './BlogPage.styles.css'
-import { Navbar } from '../components'
-import LeftArror from '../assets/images/leftArrow.svg'
-import BlogLeftArrow from '../assets/images/blog-left-arrow.svg'
-import BlogRightArrow from '../assets/images/blog-right-arrow.svg'
-import LinkArrow from '../assets/images/link-arrow.svg'
+import { Navbar } from '../../components'
+import LeftArror from '../../assets/images/leftArrow.svg'
+import BlogLeftArrow from '../../assets/images/blog-left-arrow.svg'
+import BlogRightArrow from '../../assets/images/blog-right-arrow.svg'
+import LinkArrow from '../../assets/images/link-arrow.svg'
 
 export const loader = async ({ params }) => {
   console.log(params)

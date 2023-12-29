@@ -1,11 +1,11 @@
-import RedberryLogo from '../assets/images/redberry-logo.svg'
+import RedberryLogo from '../../assets/images/redberry-logo.svg'
 import './NavBarComponent.styles.css'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 
 const NavBarComponent = ({ handleOpenLoginModal }) => {
   const { isLoggedIn } = useAuth()
-  console.log("isloggedin" ,isLoggedIn)
+
   console.log(isLoggedIn)
 
   return (

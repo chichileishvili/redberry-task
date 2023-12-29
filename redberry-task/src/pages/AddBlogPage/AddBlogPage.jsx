@@ -1,14 +1,14 @@
 import { Form, Link, useActionData, useNavigate } from 'react-router-dom'
-import { customFetch } from '../utils/customFetch'
-import { BlogNavbar, SuccesAddBlog } from '../components'
-import LeftArror from '../assets/images/leftArrow.svg'
-import { CategoriesContext } from '../contexts/CategoriesContext'
+import { customFetch } from '../../utils/customFetch'
+import { BlogNavbar, SuccesAddBlog } from '../../components'
+import LeftArror from '../../assets/images/leftArrow.svg'
+import { CategoriesContext } from '../../contexts/CategoriesContext'
 import { useContext } from 'react'
 import './AddBlogPage.styles.css'
 import { useState, useEffect } from 'react'
-import DropdownImg from '../assets/images/dropdown.svg'
-import FolderAdd from '../assets/images/folder-add.svg'
-import IMGicon from '../assets/images/img-icon.svg'
+import DropdownImg from '../../assets/images/dropdown.svg'
+import FolderAdd from '../../assets/images/folder-add.svg'
+import IMGicon from '../../assets/images/img-icon.svg'
 
 export const action = async ({ request }) => {
   const formData = await request.formData()

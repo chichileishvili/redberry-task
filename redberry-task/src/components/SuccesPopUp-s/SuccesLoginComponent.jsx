@@ -1,4 +1,4 @@
-import greenTick from '../assets/images/green-tick.svg'
+import greenTick from '../../assets/images/green-tick.svg'
 import './SuccesLoginComponent.styles.css'
 
 const SuccesLoginComponent = ({ handleCloseLoginModal }) => {

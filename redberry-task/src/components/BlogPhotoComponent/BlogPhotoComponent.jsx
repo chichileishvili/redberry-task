@@ -1,4 +1,4 @@
-import blogPhoto from '../assets/images/blogPhoto.svg'
+import blogPhoto from '../../assets/images/blogPhoto.svg'
 import './BlogPhotoComponent.styles.css'
 
 const BlogPhotoComponent = () => {

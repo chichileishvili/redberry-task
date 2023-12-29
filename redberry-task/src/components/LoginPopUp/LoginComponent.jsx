@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './LoginComponent.styles.css'
-import { SuccesLogin } from '.'
-import {customFetch} from '../utils/customFetch'
-import errorSign from '../assets/images/error-sign.svg'
-import { useAuth } from '../contexts/AuthContext'
+import { SuccesLogin } from '..'
+import { customFetch } from '../../utils/customFetch'
+import errorSign from '../../assets/images/error-sign.svg'
+import { useAuth } from '../../contexts/AuthContext'
 
 const LoginComponent = ({ handleCloseLoginModal }) => {
   const { isLoggedIn, setIsLoggedIn } = useAuth()

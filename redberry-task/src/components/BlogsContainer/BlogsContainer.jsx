@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import './BlogsContainer.styles.css'
-import LinkArrow from '../assets/images/link-arrow.svg'
+import LinkArrow from '../../assets/images/link-arrow.svg'
 
 const BlogsContainer = ({ blogs }) => {
   return (

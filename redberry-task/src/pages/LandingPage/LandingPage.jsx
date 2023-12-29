@@ -1,8 +1,8 @@
-import { customFetch } from '../utils/customFetch'
-import { Login, CategoryTitleComponent, BlogPhoto, Navbar, Blogs } from '../components'
+import { customFetch } from '../../utils/customFetch'
+import { Login, CategoryTitleComponent, BlogPhoto, Navbar, Blogs } from '../../components'
 import { useContext, useState, useEffect } from 'react'
-import { useAuth } from '../contexts/AuthContext'
-import { CategoriesContext } from '../contexts/CategoriesContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { CategoriesContext } from '../../contexts/CategoriesContext'
 import { useLoaderData } from 'react-router-dom'
 
 export const loader = async () => {

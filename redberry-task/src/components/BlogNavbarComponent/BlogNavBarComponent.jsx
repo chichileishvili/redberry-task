@@ -1,4 +1,4 @@
-import RedberryLogo from '../assets/images/redberry-logo.svg'
+import RedberryLogo from '../../assets/images/redberry-logo.svg'
 import './BlogNavBarComponent.styles.css'
 
 const BlogNavBarComponent = () => {
