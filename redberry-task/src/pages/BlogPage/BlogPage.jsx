@@ -114,7 +114,7 @@ const BlogPage = () => {
           {Array.isArray(currentFilteredBlogs) &&
             currentFilteredBlogs.map((blog) => (
               <div className='blog-blogPage-container' key={blog.id}>
-                <img src={blog.image} alt='blog-landingPage-image' />
+                <img src={blog.image} alt='blog-landingPage-image' width='408' height='328' />
                 <div>
                   <p className='blog-landingPage-author'>{blog.author}</p>
                   <p className='blog-landingPage-date'> {blog.publish_date}</p>

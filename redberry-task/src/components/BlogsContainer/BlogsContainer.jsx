@@ -8,7 +8,7 @@ const BlogsContainer = ({ blogs }) => {
       {Array.isArray(blogs) &&
         blogs.map((blog) => (
           <div className='blog-container' key={blog.id}>
-            <img src={blog.image} alt='blog-landingPage-image' />
+            <img src={blog.image} alt='blog-landingPage-image' width='408' height='328' />
             <div>
               <p className='blog-landingPage-author'>{blog.author}</p>
               <p className='blog-landingPage-date'> {blog.publish_date}</p>
